@@ -16,50 +16,10 @@ FusionEKF::FusionEKF() {
 
   previous_timestamp_ = 0;
 
-  // initializing matrices
-  R_laser_ = MatrixXd(2, 2);
-  R_radar_ = MatrixXd(3, 3);
-  H_laser_ = MatrixXd(2, 4);
-  //measurement matrix
-  H_laser_ << 1, 0, 0, 0,
-        0, 1, 0, 0;
-  //measurement covariance matrix - laser
-  R_laser_ << 0.0225, 0,
-        0, 0.0225;
-
-  //measurement covariance matrix - radar
-  R_radar_ << 0.09, 0, 0,
-        0, 0.0009, 0,
-        0, 0, 0.09;
-
   /**
     * initializing the FusionEKF.
     * Set the process and measurement noises
   */
-
-  //create a 4D state vector, we don't know yet the values of the x state
-  VectorXd x_in = VectorXd(4);
-
-  //state covariance matrix P
-  MatrixXd P_in = MatrixXd(4, 4);
-  P_in << 1, 0, 0, 0,
-        0, 1, 0, 0,
-        0, 0, 1000, 0,
-        0, 0, 0, 1000;
-
-  //the initial transition matrix F_
-  MatrixXd F_in = MatrixXd(4, 4);
-  F_in << 1, 0, 1, 0,
-        0, 1, 0, 1,
-        0, 0, 1, 0,
-        0, 0, 0, 1;
-
-  //the process covariance matrix Q
-  MatrixXd Q_in = MatrixXd(4, 4);
-
-  //Initialize Kalman Filter
-  ekf_ = KalmanFilter();
-  ekf_.Init(x_in,P_in,F_in,H_laser_,R_laser_,R_radar_,Q_in);
 
   //set the acceleration noise components
   noise_ax = 9;
@@ -85,6 +45,9 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
    ****************************************************************************/
   if (!is_initialized_) {
 
+    //Initialize Kalman Filter
+    ekf_ = KalmanFilter();
+    ekf_.Init();
 
     if (measurement_pack.sensor_type_ == MeasurementPackage::RADAR) {
       /**

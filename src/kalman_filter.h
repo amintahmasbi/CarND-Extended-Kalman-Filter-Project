@@ -44,8 +44,7 @@ public:
    * @param R_in Measurement covariance matrix
    * @param Q_in Process covariance matrix
    */
-  void Init(Eigen::VectorXd &x_in, Eigen::MatrixXd &P_in, Eigen::MatrixXd &F_in,
-      Eigen::MatrixXd &H_laser_in, Eigen::MatrixXd &R_laser_in, Eigen::MatrixXd &R_radar_in, Eigen::MatrixXd &Q_in);
+  void Init();
 
   /**
    * Prediction Predicts the state and the state covariance

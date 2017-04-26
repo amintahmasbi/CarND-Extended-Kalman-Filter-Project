@@ -8,15 +8,44 @@ KalmanFilter::KalmanFilter() {}
 
 KalmanFilter::~KalmanFilter() {}
 
-void KalmanFilter::Init(VectorXd &x_in, MatrixXd &P_in, MatrixXd &F_in,
-                        MatrixXd &H_laser_in, MatrixXd &R_laser_in, MatrixXd &R_radar_in, MatrixXd &Q_in) {
-  x_ = x_in;
-  P_ = P_in;
-  F_ = F_in;
-  H_laser_ = H_laser_in;
-  R_laser_ = R_laser_in;
-  R_radar_ = R_radar_in;
-  Q_ = Q_in;
+void KalmanFilter::Init() {
+  //create a 4D state vector, we don't know yet the values of the x state
+  x_= VectorXd(4);
+
+  // the initial state covariance matrix P
+  P_ = MatrixXd(4, 4);
+  P_ <<   1, 0, 0, 0,
+          0, 1, 0, 0,
+          0, 0, 1000, 0,
+          0, 0, 0, 1000;
+
+  //the initial transition matrix F_
+  F_ = MatrixXd(4, 4);
+  F_ <<   1, 0, 1, 0,
+          0, 1, 0, 1,
+          0, 0, 1, 0,
+          0, 0, 0, 1;
+
+  //the process covariance matrix Q
+  Q_ = MatrixXd(4, 4);
+
+  // initializing matrices
+  R_laser_ = MatrixXd(2, 2);
+  R_radar_ = MatrixXd(3, 3);
+  H_laser_ = MatrixXd(2, 4);
+
+  //measurement covariance matrix - laser
+  R_laser_ << 0.0225, 0,
+              0, 0.0225;
+
+  //measurement covariance matrix - radar
+  R_radar_ << 0.09, 0, 0,
+              0, 0.0009, 0,
+              0, 0, 0.09;
+
+  //measurement matrix
+  H_laser_ << 1, 0, 0, 0,
+              0, 1, 0, 0;
 }
 
 void KalmanFilter::Predict() {
