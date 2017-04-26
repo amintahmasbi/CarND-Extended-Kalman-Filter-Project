@@ -67,7 +67,7 @@ MatrixXd Tools::CalculateJacobian(const VectorXd& x_state) {
 
   //check division by zero
   if (fabs(c1) < 0.0001) {
-    cout << "CalculateJacobian () - Error - Division by Zero" << endl;
+//    cout << "CalculateJacobian () - Error - Division by Zero" << endl;
     c1 = 0.0001;
     c2 = sqrt(c1);
     c3 = (c1 * c2);
@@ -99,7 +99,7 @@ VectorXd Tools::CalculateHprime(const VectorXd &x_state) {
 
   //check division by zero
   if (fabs(c1) < 0.0001) {
-    cout << "CalculateHprime() - Error - Division by Zero" << endl;
+//    cout << "CalculateHprime() - Error - Division by Zero" << endl;
     c1 = 0.0001;
     c2 = sqrt(c1);
     c3 = (c1 * c2);
