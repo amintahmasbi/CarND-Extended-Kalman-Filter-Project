@@ -60,21 +60,23 @@ MatrixXd Tools::CalculateJacobian(const VectorXd& x_state) {
   float vx = x_state(2);
   float vy = x_state(3);
 
+  //pre-compute a set of terms to avoid repeated calculation
+  float c1 = px * px + py * py;
+  float c2 = sqrt(c1);
+  float c3 = (c1 * c2);
+
   //check division by zero
-  if ((px == 0) && (py == 0)) {
-    Hj << 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
-
-    cout << "CalculateJacobian() - Error - Division by Zero" << endl;
+  if (fabs(c1) < 0.0001) {
+    cout << "CalculateJacobian () - Error - Division by Zero" << endl;
+    c1 = 0.0001;
+    c2 = sqrt(c1);
+    c3 = (c1 * c2);
   }
+
   //compute the Jacobian matrix
-  else {
-    float px2_py2 = pow(px, 2) + pow(py, 2);
-
-    Hj << px / sqrt(px2_py2), py / sqrt(px2_py2), 0, 0, -py / px2_py2, px
-        / px2_py2, 0, 0, py * (vx * py - vy * px) / pow(px2_py2, 1.5), px
-        * (vy * px - vx * py) / pow(px2_py2, 1.5), px / sqrt(px2_py2), py
-        / sqrt(px2_py2);
-  }
+  Hj << (px / c2), (py / c2), 0, 0, -(py / c1), (px / c1), 0, 0, (py
+      * (vx * py - vy * px) / c3), (px * (vy * px - vx * py) / c3), (px / c2), (py
+      / c2);
 
   return Hj;
 }
@@ -90,21 +92,24 @@ VectorXd Tools::CalculateHprime(const VectorXd &x_state) {
   float vx = x_state(2);
   float vy = x_state(3);
 
+  //pre-compute a set of terms to avoid repeated calculation
+  float c1 = px * px + py * py;
+  float c2 = sqrt(c1);
+  float c3 = (c1 * c2);
+
   //check division by zero
-   if ((px == 0) && (py == 0)) {
-     x_prime << 0, 0, 0;
+  if (fabs(c1) < 0.0001) {
+    cout << "CalculateHprime() - Error - Division by Zero" << endl;
+    c1 = 0.0001;
+    c2 = sqrt(c1);
+    c3 = (c1 * c2);
+  }
+  //compute the polar transform
+  float range = c2;
+  float bearing = atan2(py, px);
+  float angular_velocity = (px * vx + py * vy) / range;
 
-     cout << "CalculateHprime() - Error - Division by Zero" << endl;
-   }
-   //compute the polar transform
-   else
-   {
-     float range = sqrt(px*px + py*py);
-     float bearing = atan2(py,px);
-     float angular_velocity = (px*vx + py*vy)/range;
+  x_prime << range, bearing, angular_velocity;
 
-     x_prime << range, bearing, angular_velocity;
-   }
-
-   return x_prime;
+  return x_prime;
 }
