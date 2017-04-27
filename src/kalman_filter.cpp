@@ -83,14 +83,14 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
   VectorXd z_pred = Tools::CalculateHprime(x_);
   VectorXd y = z - z_pred;
 
-  if( y(2) < -M_PI)
+  if( y(1) < -M_PI)
   {
-    y(2) += 2*M_PI;
+    y(1) += 2*M_PI;
   }
 
-  if ( y(2) > M_PI)
+  if ( y(1) > M_PI)
   {
-    y(2) -= 2*M_PI;
+    y(1) -= 2*M_PI;
   }
 
 
