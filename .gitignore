@@ -1,8 +1,8 @@
 # silly macOS
 .DS_Store
 
-# build files
-build/
+# build files (not on my repository)
+# build/
 
 # editor config
 .vscode/
