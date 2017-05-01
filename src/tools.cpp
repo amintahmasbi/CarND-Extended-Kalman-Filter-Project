@@ -100,6 +100,11 @@ VectorXd Tools::CalculateHprime(const VectorXd &x_state) {
   //check division by zero
   if (fabs(c1) < 0.0001) {
 //    cout << "CalculateHprime() - Error - Division by Zero" << endl;
+    if( (px == 0.0) && (py == 0.0)) // Avoid atan2 undefined case
+    {
+      px = 0.0001;
+      py = 0.0001;
+    }
     c1 = 0.0001;
     c2 = sqrt(c1);
     c3 = (c1 * c2);
