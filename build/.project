@@ -167,6 +167,21 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
+			<name>[Targets]/[exe] ExtendedKF/Header Files/tools.h</name>
+			<type>1</type>
+			<location>/home/hradt/git/CarND-Extended-Kalman-Filter-Project/src/tools.h</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ExtendedKF/Header Files/FusionEKF.h</name>
+			<type>1</type>
+			<location>/home/hradt/git/CarND-Extended-Kalman-Filter-Project/src/FusionEKF.h</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ExtendedKF/Header Files/kalman_filter.h</name>
+			<type>1</type>
+			<location>/home/hradt/git/CarND-Extended-Kalman-Filter-Project/src/kalman_filter.h</location>
+		</link>
+		<link>
 			<name>[Targets]/[exe] ExtendedKF/CMake Rules</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>

@@ -2,7 +2,8 @@
 .DS_Store
 
 # build files (not on my repository)
-# build/
+build/
+build/CMakeFiles/
 
 # editor config
 .vscode/
