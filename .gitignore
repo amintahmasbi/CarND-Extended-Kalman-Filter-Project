@@ -8,9 +8,10 @@ build/CMakeFiles/
 # editor config
 .vscode/
 
-#ignore temp recovery files
+# ignore temp recovery files
 .*~*
 !/.gitignore
+*.*~
 
 # Xcode
 *.pbxuser
